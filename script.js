@@ -16,7 +16,15 @@ function divide(a,b) {
 }
 
 function operate(operator, a, b) {
-    return operator(a,b);
+   if (operator === "add") {
+    return add(a,b)
+   } else if (operator === "minus") {
+    return minus(a,b)
+   } else if (operator === "multiply") {
+    return multiply(a,b)
+   } else if (operator === "divide") {
+    return divide(a,b)
+   }
 }
 
 // variables
@@ -24,6 +32,7 @@ let text = '';
 let a;
 let b;
 let operator;
+let result;
 
 
 // addEventListener
@@ -109,68 +118,155 @@ btn9.addEventListener('click', () => {
 const btnClear = document.querySelector('#btnClear') 
 btnClear.addEventListener('click', () => {
     text = '';
-    a = 0;
-    b = 0;
-    operator = '';
+    a = undefined;
+    b = undefined;;
+    operator = undefined;
+    result = undefined;
+    console.log(text, a, b, operator, result)
     
     document.querySelector('#display').textContent = "0";
 })
 
+
 const btnAdd = document.querySelector('#btnAdd') 
 btnAdd.addEventListener('click', () => {
-    operator = "add"
-    a = Number(text);
-    text = '';
+    
+    if (result) {
+        a = result;
+        operator = "add"
+        text = '';
+    } else {
+        if (!operator) {
+            a = Number(text);
+            text = '';
+            operator = "add"
+        } else { // 6 - 3 + 5 * 4
+            b = Number(text)
+            text = '';
+            let temp = operate(operator,a,b)
+            a = temp;
+            operator = "add"
+        }
+        
+    }
     
     document.querySelector('#display').textContent = "+";
 })
 
 const btnMinus = document.querySelector('#btnMinus') 
 btnMinus.addEventListener('click', () => {
-    operator = "minus"
-    a = Number(text);
-    text = '';
+
+    
+    if (result) {
+        a = result;
+        operator = "minus"
+        text = '';
+    } else {
+        if (!operator) {
+            a = Number(text);
+            text = '';
+            operator = "minus"
+        } else { // 6 - 3 + 5 * 4
+            b = Number(text)
+            text = '';
+            let temp = operate(operator,a,b)
+            a = temp;
+            operator = "minus"
+        }
+        
+    }
     
     document.querySelector('#display').textContent = "-";
 })
 
 const btnMultiply = document.querySelector('#btnMultiply') 
 btnMultiply.addEventListener('click', () => {
-    operator = "multiply"
-    a = Number(text);
-    text = '';
+
+    
+    if (result) {
+        a = result;
+        operator = "multiply"
+        text = '';
+    } else {
+        if (!operator) {
+            a = Number(text);
+            text = '';
+            operator = "multiply"
+        } else { // 6 - 3 + 5 * 4
+            b = Number(text)
+            text = '';
+            let temp = operate(operator,a,b)
+            a = temp;
+            operator = "multiply"
+        }
+        
+    }
     
     document.querySelector('#display').textContent = "*";
 })
 
 const btnDivide = document.querySelector('#btnDivide') 
 btnDivide.addEventListener('click', () => {
-    operator = "divide"
-    a = Number(text);
-    text = '';
+ 
+    if (result) {
+        a = result;
+        operator = "divide"
+        text = '';
+    } else {
+        if (!operator) {
+            a = Number(text);
+            text = '';
+            operator = "divide"
+        } else { // 6 - 3 + 5 * 4
+            b = Number(text)
+            text = '';
+            let temp = operate(operator,a,b)
+            a = temp;
+            operator = "divide"
+        }
+        
+    }
     
     document.querySelector('#display').textContent = "/";
 })
 
 const btnEqual = document.querySelector('#btnEqual') 
 btnEqual.addEventListener('click', () => {
+    
+    
+
     b = Number(text)
-    text = ''
+
     
-    let result = operate(operator,a,b)
+    if (operator && a && b) {
+        if (operator === "divide" && b === 0) {
+            document.querySelector('#display').textContent = "Error";
+            text = '';
+            a = 0;
+            b = 0;
+            operator = '';
+            result;
+        } else {
+            result = operate(operator,a,b)
+            document.querySelector('#display').textContent = result;
+            
+        }
+        
+    } else {
+        document.querySelector('#display').textContent = "Error";
+        text = '';
+        a = 0;
+        b = 0;
+        operator = '';
+        result;
+    }
     
-    document.querySelector('#display').textContent = result;
     
 })
 
 //display
 
-//questions
 
-// setiap query selector harus bikin variable sendiri-sendiri?
-// apakah loop bisa buat variable dengan template literal?
-// apakah penamaan variable bisa semacam btn+ or btn-?
-// id="4" kenapa ga bisa di query selector?
 
 
 
